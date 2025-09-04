@@ -161,6 +161,233 @@
                 font-size: 0.7rem;
             }
         }
+
+        /* AI Assistant Styles */
+        .ai-assistant-float {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            animation: aiFloat 3s ease-in-out infinite;
+        }
+
+        .ai-assistant-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .ai-icon {
+            color: white;
+            font-size: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ai-pulse {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.3);
+            animation: aiPulse 2s infinite;
+        }
+
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 170px;
+            right: 30px;
+            width: 350px;
+            height: 450px;
+            background: var(--bg-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+            border: 1px solid var(--border-color);
+            animation: aiChatSlideIn 0.3s ease-out;
+        }
+
+        .ai-chat-widget.active {
+            display: flex;
+        }
+
+        .ai-chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .ai-info h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .ai-status {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .ai-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .ai-close:hover {
+            opacity: 1;
+        }
+
+        .ai-chat-body {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .ai-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .ai-message-avatar {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .ai-message-content {
+            background: var(--card-bg);
+            padding: 12px 15px;
+            border-radius: 15px 15px 15px 5px;
+            border: 1px solid var(--border-color);
+        }
+
+        .ai-message-content p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .ai-message-content p + p {
+            margin-top: 8px;
+        }
+
+        .ai-chat-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            border-radius: 0 0 15px 15px;
+        }
+
+        .ai-quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .ai-action-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+        }
+
+        .ai-action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        @keyframes aiFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes aiPulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        @keyframes aiChatSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .ai-chat-widget {
+                width: calc(100vw - 40px);
+                right: 20px;
+                left: 20px;
+                bottom: 150px;
+            }
+            
+            .ai-assistant-float {
+                bottom: 80px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .ai-icon {
+                font-size: 20px;
+            }
+        }
     </style>
     <link rel="stylesheet" href="style.css?v=6&timestamp=1725398400">
 </head>
@@ -654,6 +881,61 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- AI Assistant Floating Button -->
+    <div class="ai-assistant-float" id="aiAssistant" title="Mert'in AI Asistanı">
+        <div class="ai-icon">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="ai-pulse"></div>
+    </div>
+
+    <!-- AI Chat Widget -->
+    <div class="ai-chat-widget" id="aiChatWidget">
+        <div class="ai-chat-header">
+            <div class="ai-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="ai-info">
+                <h4>Mert AI</h4>
+                <span class="ai-status">Online</span>
+            </div>
+            <button class="ai-close" id="aiChatClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="ai-chat-body">
+            <div class="ai-message">
+                <div class="ai-message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-message-content">
+                    <p>Merhaba! Ben Mert'in AI asistanıyım. 🤖</p>
+                    <p>Size nasıl yardımcı olabilirim?</p>
+                </div>
+            </div>
+        </div>
+        <div class="ai-chat-footer">
+            <div class="ai-quick-actions">
+                <button class="ai-action-btn" data-action="portfolio">
+                    <i class="fas fa-briefcase"></i>
+                    Projeler
+                </button>
+                <button class="ai-action-btn" data-action="contact">
+                    <i class="fas fa-envelope"></i>
+                    İletişim
+                </button>
+                <button class="ai-action-btn" data-action="skills">
+                    <i class="fas fa-code"></i>
+                    Yetenekler
+                </button>
+                <button class="ai-action-btn" data-action="cv">
+                    <i class="fas fa-download"></i>
+                    CV İndir
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
     // Contact Form - FormSubmit.co ile Çalışan Sistem
@@ -700,6 +982,55 @@ Bu mesaj portföy sitesi iletişim formundan gönderilmiştir.
                 contactForm.reset();
             });
         }
+
+        // AI Assistant Functionality
+        const aiAssistant = document.getElementById('aiAssistant');
+        const aiChatWidget = document.getElementById('aiChatWidget');
+        const aiChatClose = document.getElementById('aiChatClose');
+        const aiActionBtns = document.querySelectorAll('.ai-action-btn');
+
+        // AI Assistant toggle
+        aiAssistant.addEventListener('click', function() {
+            aiChatWidget.classList.toggle('active');
+        });
+
+        // Close AI chat
+        aiChatClose.addEventListener('click', function() {
+            aiChatWidget.classList.remove('active');
+        });
+
+        // AI Action buttons
+        aiActionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const action = this.getAttribute('data-action');
+                
+                switch(action) {
+                    case 'portfolio':
+                        document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+                        aiChatWidget.classList.remove('active');
+                        break;
+                    case 'contact':
+                        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+                        aiChatWidget.classList.remove('active');
+                        break;
+                    case 'skills':
+                        document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+                        aiChatWidget.classList.remove('active');
+                        break;
+                    case 'cv':
+                        // CV indirme linki buraya eklenebilir
+                        alert('CV indirme özelliği yakında eklenecek!');
+                        break;
+                }
+            });
+        });
+
+        // Close AI chat when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!aiAssistant.contains(e.target) && !aiChatWidget.contains(e.target)) {
+                aiChatWidget.classList.remove('active');
+            }
+        });
     });
     </script>
     <script src="script.js?v=7&timestamp=1725398600"></script>
