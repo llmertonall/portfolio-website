@@ -628,6 +628,9 @@
             color: white;
             position: relative;
             overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .blog-card-image::before {
@@ -637,7 +640,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        .blog-card-image i {
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .blog-card-content {
@@ -1069,7 +1079,7 @@
             
             <div class="blog-grid">
                 <article class="blog-card reveal-left" style="animation-delay: 0.1s;">
-                    <div class="blog-card-image">
+                    <div class="blog-card-image" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <i class="fas fa-wifi"></i>
                     </div>
                     <div class="blog-card-content">
@@ -1086,7 +1096,7 @@
                 </article>
                 
                 <article class="blog-card reveal" style="animation-delay: 0.2s;">
-                    <div class="blog-card-image">
+                    <div class="blog-card-image" style="background-image: url('https://images.unsplash.com/photo-1607706189992-eae578626c86?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <i class="fab fa-php"></i>
                     </div>
                     <div class="blog-card-content">
@@ -1103,7 +1113,7 @@
                 </article>
                 
                 <article class="blog-card reveal-right" style="animation-delay: 0.3s;">
-                    <div class="blog-card-image">
+                    <div class="blog-card-image" style="background-image: url('https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <i class="fab fa-js-square"></i>
                     </div>
                     <div class="blog-card-content">
@@ -1120,7 +1130,7 @@
                 </article>
                 
                 <article class="blog-card reveal-left" style="animation-delay: 0.4s;">
-                    <div class="blog-card-image">
+                    <div class="blog-card-image" style="background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <i class="fas fa-database"></i>
                     </div>
                     <div class="blog-card-content">
@@ -1137,7 +1147,7 @@
                 </article>
                 
                 <article class="blog-card reveal" style="animation-delay: 0.5s;">
-                    <div class="blog-card-image">
+                    <div class="blog-card-image" style="background-image: url('https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <i class="fab fa-git-alt"></i>
                     </div>
                     <div class="blog-card-content">
@@ -1154,7 +1164,7 @@
                 </article>
                 
                 <article class="blog-card reveal-right" style="animation-delay: 0.6s;">
-                    <div class="blog-card-image">
+                    <div class="blog-card-image" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
                     <div class="blog-card-content">
