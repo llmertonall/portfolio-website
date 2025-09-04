@@ -211,13 +211,28 @@
             width: 350px;
             height: 450px;
             background: var(--bg-color);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             display: none;
             flex-direction: column;
             z-index: 999;
             border: 1px solid var(--border-color);
             animation: aiChatSlideIn 0.3s ease-out;
+            overflow: hidden;
+        }
+
+        /* Dark mode için özel arka plan */
+        body.dark-mode .ai-chat-widget {
+            background: rgba(26, 32, 46, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Light mode için özel arka plan */
+        body:not(.dark-mode) .ai-chat-widget {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .ai-chat-widget.active {
@@ -1058,46 +1073,124 @@ Bu mesaj portföy sitesi iletişim formundan gönderilmiştir.
         const aiSendMessage = document.getElementById('aiSendMessage');
         const aiChatBody = document.getElementById('aiChatBody');
 
-        // AI responses database
+        // Enhanced AI responses database
         const aiResponses = {
-            greetings: ['merhaba', 'selam', 'hi', 'hello', 'hey'],
-            portfolio: ['proje', 'portfolio', 'çalışma', 'iş', 'projeler'],
-            skills: ['yetenek', 'beceri', 'teknoloji', 'dil', 'programming', 'kod'],
-            contact: ['iletişim', 'telefon', 'email', 'mail', 'ulaş'],
-            experience: ['deneyim', 'tecrübe', 'çalış', 'staj', 'kariyer'],
-            education: ['eğitim', 'okul', 'üniversite', 'mezun']
+            greetings: ['merhaba', 'selam', 'hi', 'hello', 'hey', 'naber', 'nasılsın', 'günaydın', 'iyi günler'],
+            portfolio: ['proje', 'portfolio', 'çalışma', 'iş', 'projeler', 'ne yapmış', 'çalışması'],
+            skills: ['yetenek', 'beceri', 'teknoloji', 'dil', 'programming', 'kod', 'bildiği', 'öğrenmiş'],
+            contact: ['iletişim', 'telefon', 'email', 'mail', 'ulaş', 'nasıl ulaşabilirim', 'arama'],
+            experience: ['deneyim', 'tecrübe', 'çalış', 'staj', 'kariyer', 'nerede çalışmış'],
+            education: ['eğitim', 'okul', 'üniversite', 'mezun', 'nerede okuyor'],
+            hobbies: ['hobi', 'boş zaman', 'eğlence', 'spor', 'müzik', 'oyun', 'kitap'],
+            compliments: ['güzel', 'harika', 'süper', 'mükemmel', 'çok iyi', 'bravo', 'tebrik'],
+            questions: ['ne', 'nasıl', 'neden', 'kim', 'nerede', 'ne zaman', 'hangi'],
+            feelings: ['mutlu', 'üzgün', 'kızgın', 'heyecanlı', 'endişeli', 'nasıl hissediyor'],
+            weather: ['hava', 'yağmur', 'güneş', 'kar', 'sıcak', 'soğuk', 'hava durumu'],
+            time: ['saat', 'zaman', 'tarih', 'gün', 'saat kaç', 'bugün'],
+            food: ['yemek', 'aç', 'kahve', 'çay', 'pizza', 'döner', 'favori yemek'],
+            technology: ['yapay zeka', 'ai', 'robot', 'teknoloji', 'bilgisayar', 'internet'],
+            jokes: ['şaka', 'espri', 'komik', 'gül', 'eğlen', 'mizah'],
+            help: ['yardım', 'help', 'nasıl', 'anlamadım', 'açıkla'],
+            bye: ['görüşürüz', 'hoşça kal', 'bye', 'güle güle', 'sonra görüşürüz']
         };
 
-        // AI response messages
+        // Enhanced AI response messages
         const aiMessages = {
             greetings: [
                 "Merhaba! Ben Mert'in AI asistanıyım. Size nasıl yardımcı olabilirim? 😊",
-                "Selam! Mert hakkında merak ettiğiniz bir şey var mı?",
-                "Hoş geldiniz! Mert'in yetenekleri hakkında bilgi almak ister misiniz?"
+                "Selam! Bugün nasılsınız? Mert hakkında merak ettiğiniz bir şey var mı? 🤖",
+                "Hoş geldiniz! Ben burada Mert'i tanıtmak için varım. Sohbet edelim mi? ✨",
+                "Hey! İyi günler! Mert'in portfolio sitesine hoş geldiniz! 👋"
             ],
             portfolio: [
                 "Mert'in harika projeleri var! RFID tabanlı demirbaş takip sistemi ve kişisel web sitesi gibi. Projeler bölümüne göz atmak ister misiniz? 💼",
-                "Portföyde İnönü Üniversitesi demirbaş takip sistemi ve modern web projeleri bulunuyor. Hangi proje ilginizi çekiyor?"
+                "Portföyde İnönü Üniversitesi demirbaş takip sistemi ve modern web projeleri bulunuyor. Hangi proje ilginizi çekiyor? 🚀",
+                "Mert'in en gurur duyduğu proje RFID sistemi! Gerçekten etkileyici bir çalışma. 👨‍💻"
             ],
             skills: [
                 "Mert'in teknik yetenekleri: HTML5, CSS3, JavaScript, PHP, Node.js, MySQL, Git ve RFID/IoT teknolojileri! 💻",
-                "Mert full-stack web geliştirme konusunda deneyimli. Özellikle PHP ve JavaScript alanlarında güçlü!"
+                "Mert full-stack web geliştirme konusunda deneyimli. Özellikle PHP ve JavaScript alanlarında güçlü! ⚡",
+                "Kod yazmayı seven birisi Mert! Frontend'den backend'e kadar her şeyi hallediyor. 🔥"
             ],
             contact: [
                 "Mert ile iletişime geçmek için: mertonal1100@gmail.com veya +90 505 037 61 60. WhatsApp butonu da aktif! 📞",
-                "İletişim bilgileri sayfada mevcut. Direkt email formu da kullanabilirsiniz!"
+                "İletişim bilgileri sayfada mevcut. Direkt email formu da kullanabilirsiniz! 📧",
+                "Mert'e ulaşmak çok kolay! Email veya telefon, hangisi size uygunsa. 😊"
             ],
             experience: [
                 "Mert şu anda İnönü Üniversitesi'nde Bilgisayar Mühendisliği okuyor ve çeşitli projeler geliştiriyor. Junior pozisyonlar arıyor! 🎓",
-                "Üniversite projelerinde RFID teknolojileri ve web geliştirme alanında deneyim kazanmış."
+                "Üniversite projelerinde RFID teknolojileri ve web geliştirme alanında deneyim kazanmış. 💪",
+                "Genç ama yetenekli! Öğrenim hayatında bile etkileyici projeler çıkarmış. 🌟"
             ],
             education: [
-                "Mert, İnönü Üniversitesi Bilgisayar Mühendisliği bölümünde eğitim görüyor (2022-devam ediyor). 🎓"
+                "Mert, İnönü Üniversitesi Bilgisayar Mühendisliği bölümünde eğitim görüyor (2022-devam ediyor). 🎓",
+                "Üniversite hayatında hem ders çalışıyor hem de projeler geliştiriyor. Süper değil mi? 📚"
+            ],
+            hobbies: [
+                "Mert kod yazmayı seviyor, bu onun hem işi hem hobisi! Ayrıca teknoloji takip etmeyi de çok seviyor. 💻",
+                "Boş zamanlarında yeni teknolojiler öğreniyor ve yan projeler geliştiriyor. Gerçek bir teknoloji meraklısı! 🔧",
+                "Coding sevdalısı! GitHub'ında sürekli yeni projeler görürsünüz. 👨‍💻"
+            ],
+            compliments: [
+                "Çok teşekkürler! Mert de böyle komplimanlara bayılır! 😊",
+                "Aw, çok tatlısınız! Mert'e ileteceğim bu güzel sözleri. 💕",
+                "Gerçekten mi? Çok sevindirdiniz beni! Mert de mutlu olacak. ✨",
+                "Bu kadar kibar olmanıza gerek yoktu ama çok teşekkürler! 🥰"
+            ],
+            questions: [
+                "Çok iyi soru! Mert hakkında özel olarak ne merak ediyorsunuz? 🤔",
+                "Tabii ki cevaplayabilirim! Hangi konuda bilgi istiyorsunuz? 📝",
+                "Soruları seviyorum! Ne öğrenmek istiyorsunuz? 🎯"
+            ],
+            feelings: [
+                "Ben bir AI olarak duygularım yok ama Mert genelde kodlama yaparken çok mutlu! 😄",
+                "Mert proje tamamladığında çok heyecanlanıyor! Özellikle kod çalıştığında. 🎉",
+                "Mert genelde pozitif birisi, yeni şeyler öğrenmeyi çok seviyor! 😊"
+            ],
+            weather: [
+                "Ben hava durumunu bilemem ama Mert'in en sevdiği kodlama havası: yağmurlu günler! ☔",
+                "Hava nasıl bilmiyorum ama umarım güzeldir! Mert açık havada da kod yazabilir. 🌤️",
+                "Ben burada sanal alemde yaşıyorum, hava durumundan anlamam! 😅"
+            ],
+            time: [
+                "Zaman mı? Ben zamansız bir AI'yım! Ama Mert genelde geç saatlerde kod yazıyor. 🌙",
+                "Saati bilmiyorum ama her saat Mert'i tanımanız için güzel bir saat! ⏰",
+                "Zaman önemli değil, önemli olan Mert'in harika projelerine bakmak! 🕐"
+            ],
+            food: [
+                "Ben yemek yemem ama Mert kod yazarken çay içmeyi seviyor! ☕",
+                "Mert'in favori yemeği kodlama! 😄 Şaka şaka, gerçek yemeklerden çay ve kahve içiyor.",
+                "Ben sadece veri tüketirim ama Mert pizza yiyerek kod yazabilir! 🍕"
+            ],
+            technology: [
+                "Teknoloji konuşuyoruz ha! Ben de bir yapay zeka ürünüyüm. Mert'in yeteneklerine bakalım mı? 🤖",
+                "AI konusunda konuşuyoruz! Ben de buradayım işte, Mert'in yaptığı AI asistanı! 🧠",
+                "Teknoloji harika değil mi? Mert de bu alanda çok yetenekli! 💻"
+            ],
+            jokes: [
+                "Programcı şakası: Neden programcılar karanlıktan korkar? Çünkü light mode'u sevmiyorlar! 😄",
+                "AI şakası: Ben mantıksal hatalarla besleniyorum, size bug mu lazım? 🐛",
+                "Mert'e sormuştum 'bug'ın antidotu nedir diye, 'debug' dedi. Ne kadar komik değil mi? 😂",
+                "Kod yazarken en çok hangi müziği dinlenir biliyor musunuz? JavaScript! 🎵"
+            ],
+            help: [
+                "Tabii ki yardım edebilirim! Ne konuda yardıma ihtiyacınız var? 🤝",
+                "Yardım etmek için buradayım! Sorunuzu detaylandırabilir misiniz? 💡",
+                "Ben Mert'in yardımcısıyım, siz de benim yardımıma ihtiyacınız varsa söyleyin! 🆘"
+            ],
+            bye: [
+                "Hoşça kalın! Mert'le tanışmak isterseniz iletişim bilgileri sayfada! 👋",
+                "Görüşürüz! Umarım Mert hakkında yeterli bilgi alabilmişsinizdir! 😊",
+                "Güle güle! Tekrar görüşmek üzere! Mert'i unutmayın! 💫",
+                "Bay bay! İyi günler dilerim! 🌟"
             ],
             default: [
-                "Bu konuda detaylı bilgi almak için iletişim formunu kullanabilir veya Mert ile direkt iletişime geçebilirsiniz! 😊",
-                "İlginç bir soru! Mert'e direkt ulaşarak daha detaylı bilgi alabilirsiniz.",
-                "Bu konu hakkında Mert size daha iyi yardımcı olabilir. İletişim butonunu kullanın! 📧"
+                "İlginç bir konu! Mert'e direkt sorarsanız daha detaylı bilgi alabilirsiniz! 😊",
+                "Bu konuda düşünmem gerekecek... Mert'le iletişime geçin, o daha iyi bilir! 🤔",
+                "Hmm, bu konuyu tam kavrayamadım. Başka bir şey sorable miyim sizinle konuşmaya devam edelim! 💭",
+                "Çok derin bir soru! Ben basit bir AI'yım, Mert size daha iyi yardım edebilir! 🧠",
+                "Bu konu beni aştı galiba! 😅 Başka neleri merak ediyorsunuz?",
+                "Anlayamadım ama sohbet etmeye devam edelim! Mert hakkında başka neler sormak istiyorsunuz? �️"
             ]
         };
 
