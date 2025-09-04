@@ -314,6 +314,66 @@
             margin-top: 8px;
         }
 
+        .ai-user-message {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .ai-user-message-content {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 15px 15px 5px 15px;
+            max-width: 70%;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .ai-chat-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            background: var(--card-bg);
+        }
+
+        .ai-chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .ai-chat-input input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .ai-chat-input button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .ai-chat-input button:hover {
+            background: var(--accent-color);
+            transform: scale(1.1);
+        }
+
         .ai-chat-footer {
             padding: 15px 20px;
             border-top: 1px solid var(--border-color);
@@ -903,7 +963,7 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <div class="ai-chat-body">
+        <div class="ai-chat-body" id="aiChatBody">
             <div class="ai-message">
                 <div class="ai-message-avatar">
                     <i class="fas fa-robot"></i>
@@ -913,6 +973,12 @@
                     <p>Size nasıl yardımcı olabilirim?</p>
                 </div>
             </div>
+        </div>
+        <div class="ai-chat-input">
+            <input type="text" id="aiMessageInput" placeholder="Mesajınızı yazın..." maxlength="200">
+            <button id="aiSendMessage">
+                <i class="fas fa-paper-plane"></i>
+            </button>
         </div>
         <div class="ai-chat-footer">
             <div class="ai-quick-actions">
@@ -988,15 +1054,138 @@ Bu mesaj portföy sitesi iletişim formundan gönderilmiştir.
         const aiChatWidget = document.getElementById('aiChatWidget');
         const aiChatClose = document.getElementById('aiChatClose');
         const aiActionBtns = document.querySelectorAll('.ai-action-btn');
+        const aiMessageInput = document.getElementById('aiMessageInput');
+        const aiSendMessage = document.getElementById('aiSendMessage');
+        const aiChatBody = document.getElementById('aiChatBody');
+
+        // AI responses database
+        const aiResponses = {
+            greetings: ['merhaba', 'selam', 'hi', 'hello', 'hey'],
+            portfolio: ['proje', 'portfolio', 'çalışma', 'iş', 'projeler'],
+            skills: ['yetenek', 'beceri', 'teknoloji', 'dil', 'programming', 'kod'],
+            contact: ['iletişim', 'telefon', 'email', 'mail', 'ulaş'],
+            experience: ['deneyim', 'tecrübe', 'çalış', 'staj', 'kariyer'],
+            education: ['eğitim', 'okul', 'üniversite', 'mezun']
+        };
+
+        // AI response messages
+        const aiMessages = {
+            greetings: [
+                "Merhaba! Ben Mert'in AI asistanıyım. Size nasıl yardımcı olabilirim? 😊",
+                "Selam! Mert hakkında merak ettiğiniz bir şey var mı?",
+                "Hoş geldiniz! Mert'in yetenekleri hakkında bilgi almak ister misiniz?"
+            ],
+            portfolio: [
+                "Mert'in harika projeleri var! RFID tabanlı demirbaş takip sistemi ve kişisel web sitesi gibi. Projeler bölümüne göz atmak ister misiniz? 💼",
+                "Portföyde İnönü Üniversitesi demirbaş takip sistemi ve modern web projeleri bulunuyor. Hangi proje ilginizi çekiyor?"
+            ],
+            skills: [
+                "Mert'in teknik yetenekleri: HTML5, CSS3, JavaScript, PHP, Node.js, MySQL, Git ve RFID/IoT teknolojileri! 💻",
+                "Mert full-stack web geliştirme konusunda deneyimli. Özellikle PHP ve JavaScript alanlarında güçlü!"
+            ],
+            contact: [
+                "Mert ile iletişime geçmek için: mertonal1100@gmail.com veya +90 505 037 61 60. WhatsApp butonu da aktif! 📞",
+                "İletişim bilgileri sayfada mevcut. Direkt email formu da kullanabilirsiniz!"
+            ],
+            experience: [
+                "Mert şu anda İnönü Üniversitesi'nde Bilgisayar Mühendisliği okuyor ve çeşitli projeler geliştiriyor. Junior pozisyonlar arıyor! 🎓",
+                "Üniversite projelerinde RFID teknolojileri ve web geliştirme alanında deneyim kazanmış."
+            ],
+            education: [
+                "Mert, İnönü Üniversitesi Bilgisayar Mühendisliği bölümünde eğitim görüyor (2022-devam ediyor). 🎓"
+            ],
+            default: [
+                "Bu konuda detaylı bilgi almak için iletişim formunu kullanabilir veya Mert ile direkt iletişime geçebilirsiniz! 😊",
+                "İlginç bir soru! Mert'e direkt ulaşarak daha detaylı bilgi alabilirsiniz.",
+                "Bu konu hakkında Mert size daha iyi yardımcı olabilir. İletişim butonunu kullanın! 📧"
+            ]
+        };
 
         // AI Assistant toggle
         aiAssistant.addEventListener('click', function() {
             aiChatWidget.classList.toggle('active');
+            if (aiChatWidget.classList.contains('active')) {
+                aiMessageInput.focus();
+            }
         });
 
         // Close AI chat
         aiChatClose.addEventListener('click', function() {
             aiChatWidget.classList.remove('active');
+        });
+
+        // Send AI message
+        function sendAIMessage() {
+            const message = aiMessageInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addUserMessage(message);
+            aiMessageInput.value = '';
+
+            // Generate AI response
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                addAIMessage(response);
+            }, 500);
+        }
+
+        // Add user message to chat
+        function addUserMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-user-message';
+            messageDiv.innerHTML = `
+                <div class="ai-user-message-content">
+                    ${message}
+                </div>
+            `;
+            aiChatBody.appendChild(messageDiv);
+            scrollChatToBottom();
+        }
+
+        // Add AI message to chat
+        function addAIMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-message';
+            messageDiv.innerHTML = `
+                <div class="ai-message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-message-content">
+                    <p>${message}</p>
+                </div>
+            `;
+            aiChatBody.appendChild(messageDiv);
+            scrollChatToBottom();
+        }
+
+        // Generate AI response based on user input
+        function generateAIResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            for (const [category, keywords] of Object.entries(aiResponses)) {
+                if (keywords.some(keyword => lowerMessage.includes(keyword))) {
+                    const responses = aiMessages[category];
+                    return responses[Math.floor(Math.random() * responses.length)];
+                }
+            }
+            
+            const defaultResponses = aiMessages.default;
+            return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+        }
+
+        // Scroll chat to bottom
+        function scrollChatToBottom() {
+            aiChatBody.scrollTop = aiChatBody.scrollHeight;
+        }
+
+        // Send message events
+        aiSendMessage.addEventListener('click', sendAIMessage);
+        
+        aiMessageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendAIMessage();
+            }
         });
 
         // AI Action buttons
