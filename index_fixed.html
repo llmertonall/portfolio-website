@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mert - Junior Yazılım Geliştirici | Portföy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Navigation Fix */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 0.4rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.1);
+            height: 55px;
+        }
+        
+        /* Dark mode navbar */
+        body.dark-theme .navbar {
+            background: rgba(26, 26, 26, 0.95);
+            box-shadow: 0 1px 10px rgba(255,255,255,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        .nav-logo h2 {
+            color: #333;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0;
+            transition: color 0.3s ease;
+        }
+        
+        /* Dark mode logo */
+        body.dark-theme .nav-logo h2 {
+            color: #ffffff;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 1.2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #667eea;
+        }
+        
+        /* Dark mode nav links */
+        body.dark-theme .nav-link {
+            color: #ffffff !important;
+        }
+        body.dark-theme .nav-link:hover {
+            color: #667eea !important;
+        }
+        
+        /* Dark mode nav toggle */
+        body.dark-theme .nav-toggle {
+            color: #ffffff !important;
+        }
+        
+        /* Dark mode theme toggle */
+        body.dark-theme .theme-toggle {
+            border-color: #667eea !important;
+            color: #667eea !important;
+        }
+        
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .theme-toggle {
+            background: none;
+            border: 2px solid #667eea;
+            color: #667eea;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+        .theme-toggle:hover {
+            background: #667eea;
+            color: white;
+        }
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        /* Hero Section Fix */
+        .hero {
+            padding-top: 55px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 55px;
+                flex-direction: column;
+                background-color: rgba(255, 255, 255, 0.98);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 2rem 0;
+                gap: 1.5rem;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            
+            /* Dark mode mobile menu */
+            body.dark-theme .nav-menu {
+                background-color: rgba(26, 26, 26, 0.98);
+                box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .nav-logo h2 {
+                font-size: 1.1rem;
+            }
+            .theme-toggle {
+                width: 30px;
+                height: 30px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="style.css?v=6&timestamp=1725398400">
+</head>
+
+<body class="loading">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-code"></i>
+            </div>
+            <div class="loading-text">
+                <h2>Mert</h2>
+                <p>Junior Yazılım Geliştirici</p>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <div class="loading-percentage">0%</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Mert</h2>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">Ana Sayfa</a></li>
+                <li><a href="#about" class="nav-link">Hakkımda</a></li>
+                <li><a href="#portfolio" class="nav-link">Portföy</a></li>
+                <li><a href="#experience" class="nav-link">Deneyim</a></li>
+                <li><a href="#contact" class="nav-link">İletişim</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button id="themeToggle" class="theme-toggle" title="Tema Değiştir">
+                    <i id="themeIcon" class="fas fa-moon"></i>
+                </button>
+                <button class="nav-toggle" id="nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="particles-container" id="particles-js"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text reveal-left">
+                    <h1>Merhaba, Ben <span>Mert</span></h1>
+                    <h2>Junior Full Stack Developer</h2>
+                    <p>İnönü Üniversitesi demirbaş takip sistemi ve RFID teknolojileri ile çalışan bir junior yazılım geliştiricisiyim. Modern web teknolojileri ile projeler geliştiriyorum.</p>
+                    <div class="hero-buttons">
+                        <a href="#portfolio" class="btn btn-primary">Projelerimi İncele</a>
+                        <a href="#contact" class="btn btn-secondary">İletişime Geç</a>
+                    </div>
+                </div>
+                <div class="hero-image reveal-right">
+                    <div class="image-placeholder">
+                        <img src="profil.jpg" alt="Mert Profil Fotoğrafı" class="profile-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title reveal">Hakkımda</h2>
+            <div class="about-content">
+                <div class="about-text reveal-left" style="animation-delay: 0.1s;">
+                    <h3>Junior Yazılım Geliştirici</h3>
+                    <p>Merhaba! Ben Mert, yazılım geliştirme alanında kendimi sürekli geliştiren bir junior geliştiriciyim. İnönü Üniversitesi'nde çeşitli projeler üzerinde çalışarak deneyim kazandım.</p>
+                    <p>Özellikle web teknolojileri, veritabanı yönetimi ve IoT sistemleri konularında ilgi duyuyorum. Her gün yeni şeyler öğrenmeye ve projelerimde bu bilgileri kullanmaya odaklanıyorum.</p>
+                    <p>Amacım, teknolojik çözümlerle gerçek dünya problemlerini çözmek ve yazılım geliştirme alanında uzman bir geliştirici olmak.</p>
+                </div>
+                <div class="about-skills reveal-right" style="animation-delay: 0.2s;">
+                    <h3>Teknik Yetenekler</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <i class="fab fa-html5"></i>
+                            <span>HTML5</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-css3-alt"></i>
+                            <span>CSS3</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-js-square"></i>
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-php"></i>
+                            <span>PHP</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-database"></i>
+                            <span>MySQL</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-node-js"></i>
+                            <span>Node.js</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-wifi"></i>
+                            <span>RFID/IoT</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-git-alt"></i>
+                            <span>Git</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-container reveal" style="animation-delay: 0.3s;">
+                <div class="stat-item">
+                    <h3>3+</h3>
+                    <p>Tamamlanan Proje</p>
+                </div>
+                <div class="stat-item">
+                    <h3>2+</h3>
+                    <p>Yıllık Deneyim</p>
+                </div>
+                <div class="stat-item">
+                    <h3>8+</h3>
+                    <p>Teknoloji Stack</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1</h3>
+                    <p>Üniversite Projesi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2 class="section-title reveal">Portföyüm</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item reveal" style="animation-delay: 0.1s;">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-database"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>İnönü Üniversitesi Demirbaş Takip Sistemi</h3>
+                        <p>Üniversite demirbaşlarının takip ve yönetimi için geliştirilmiş web tabanlı sistem</p>
+                        <div class="portfolio-tech">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>PHP</span>
+                            <span>MySQL</span>
+                        </div>
+                        <a href="https://github.com/llmertonall" target="_blank" class="portfolio-link" data-modal="modal1">GitHub'da Gör</a>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item reveal" style="animation-delay: 0.2s;">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Fotokopi Kimlik Doğrulama</h3>
+                        <p>RFID teknolojisi ile fotokopi makinelerinde kimlik doğrulama sistemi</p>
+                        <div class="portfolio-tech">
+                            <span>JavaScript</span>
+                            <span>Node.js</span>
+                            <span>RFID</span>
+                            <span>Database</span>
+                        </div>
+                        <a href="https://github.com/llmertonall" target="_blank" class="portfolio-link" data-modal="modal2">GitHub'da Gör</a>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item reveal" style="animation-delay: 0.3s;">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Kişisel Web Sitesi</h3>
+                        <p>HTML, CSS ve JavaScript ile oluşturduğum responsive kişisel portföy sitesi</p>
+                        <div class="portfolio-tech">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                        </div>
+                        <a href="https://github.com/llmertonall/portfolio-website" target="_blank" class="portfolio-link" data-modal="modal3">GitHub'da Gör</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title reveal">Deneyimlerim</h2>
+            <div class="timeline">
+                <div class="timeline-item reveal-left" style="animation-delay: 0.1s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Bilgisayar Mühendisliği Öğrencisi</h3>
+                        <p class="company">İnönü Üniversitesi</p>
+                        <p class="date">2022 - Devam Ediyor</p>
+                        <ul>
+                            <li>Yazılım geliştirme temellerini öğrenme</li>
+                            <li>Çeşitli programlama dilleri ile deneyim kazanma</li>
+                            <li>Takım çalışması ve proje yönetimi becerileri</li>
+                            <li>Akademik projeler ve ödevler</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reveal-right" style="animation-delay: 0.2s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Yazılım Geliştirme Stajyeri</h3>
+                        <p class="company">İnönü Üniversitesi - BİDB</p>
+                        <p class="date">2024</p>
+                        <ul>
+                            <li>Demirbaş takip sistemi analizi ve geliştirme</li>
+                            <li>PHP ve MySQL ile backend geliştirme</li>
+                            <li>Kullanıcı arayüzü tasarımı</li>
+                            <li>Sistem entegrasyonu ve test süreçleri</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="timeline-item reveal-left" style="animation-delay: 0.3s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Kişisel Projeler & Öğrenme</h3>
+                        <p class="company">Özerk Çalışma</p>
+                        <p class="date">2023 - Devam Ediyor</p>
+                        <ul>
+                            <li>Web geliştirme teknolojileri öğrenme</li>
+                            <li>GitHub'da projeler paylaşma</li>
+                            <li>IoT ve RFID teknolojileri keşfetme</li>
+                            <li>Modern JavaScript framework'leri öğrenme</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title reveal">İletişime Geçin</h2>
+            <div class="contact-content">
+                <div class="contact-info reveal-left" style="animation-delay: 0.1s;">
+                    <h3>Junior Pozisyonlar ve Staj Fırsatları İçin!</h3>
+                    <p>Junior developer pozisyonları, staj fırsatları ve projeler için benimle iletişime geçebilirsiniz.</p>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>mert@example.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telefon</h4>
+                            <p>+90 555 123 4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Lokasyon</h4>
+                            <p>Malatya, Türkiye</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-download">
+                        <a href="#" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i>
+                            CV İndir
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form reveal-right" style="animation-delay: 0.2s;">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Adınız" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Email Adresiniz" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="subject" name="subject" placeholder="Konu" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Mesajınız" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Mesaj Gönder
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Mert. Tüm hakları saklıdır.</p>
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/mert-önal-54914a353/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/llmertonall" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://twitter.com/llmertonall" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Portfolio Modals -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Demirbaş Takip Sistemi</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="project-image-large">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <div class="project-details">
+                    <h3>Proje Hakkında</h3>
+                    <p>İnönü Üniversitesi için geliştirdiğim bu sistem, RFID teknolojisi kullanarak üniversitenin tüm demirbaşlarını dijital ortamda takip etmeyi amaçlıyor. Modern web teknolojileri ve IoT entegrasyonu ile geliştirildi.</p>
+                    
+                    <div class="project-features">
+                        <h4>Özellikler</h4>
+                        <ul>
+                            <li>RFID tabanlı demirbaş takip sistemi</li>
+                            <li>Gerçek zamanlı lokasyon takibi</li>
+                            <li>Kullanıcı yetkilendirme sistemi</li>
+                            <li>Detaylı raporlama modülü</li>
+                            <li>Responsive web arayüzü</li>
+                            <li>Database yönetimi ve optimizasyonu</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-tech-large">
+                        <span>PHP</span>
+                        <span>MySQL</span>
+                        <span>JavaScript</span>
+                        <span>HTML/CSS</span>
+                        <span>RFID</span>
+                        <span>Bootstrap</span>
+                    </div>
+                    
+                    <div class="project-links">
+                        <a href="https://github.com/llmertonall" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-github"></i>
+                            GitHub'da Gör
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-external-link-alt"></i>
+                            Demo Görüntüle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Fotokopi Kimlik Doğrulama</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="project-image-large">
+                    <i class="fas fa-id-card"></i>
+                </div>
+                <div class="project-details">
+                    <h3>Proje Hakkında</h3>
+                    <p>Üniversite öğrencilerinin fotokopi hizmetlerinden güvenli şekilde yararlanabilmesi için geliştirilen kimlik doğrulama sistemi. RFID kartlar ve biyometrik veriler kullanılarak geliştirildi.</p>
+                    
+                    <div class="project-features">
+                        <h4>Özellikler</h4>
+                        <ul>
+                            <li>RFID kart tabanlı kimlik doğrulama</li>
+                            <li>Biyometrik güvenlik entegrasyonu</li>
+                            <li>Öğrenci bilgileri veritabanı</li>
+                            <li>Fotokopi işlem geçmişi</li>
+                            <li>Admin paneli ve kullanıcı yönetimi</li>
+                            <li>Güvenlik raporlama sistemi</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-tech-large">
+                        <span>JavaScript</span>
+                        <span>Node.js</span>
+                        <span>RFID</span>
+                        <span>Database</span>
+                        <span>Security</span>
+                        <span>IoT</span>
+                    </div>
+                    
+                    <div class="project-links">
+                        <a href="https://github.com/llmertonall" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-github"></i>
+                            GitHub'da Gör
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-info-circle"></i>
+                            Teknik Detaylar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Kişisel Portföy Sitesi</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="project-image-large">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="project-details">
+                    <h3>Proje Hakkında</h3>
+                    <p>Modern web teknolojileri kullanarak geliştirdiğim responsive kişisel portföy sitesi. Dark/Light mode, smooth animasyonlar ve gelişmiş kullanıcı deneyimi içeriyor.</p>
+                    
+                    <div class="project-features">
+                        <h4>Özellikler</h4>
+                        <ul>
+                            <li>Responsive tasarım (Mobile-first)</li>
+                            <li>Dark/Light mode toggle</li>
+                            <li>Smooth scroll animasyonları</li>
+                            <li>İletişim formu entegrasyonu</li>
+                            <li>Portfolio modal'ları</li>
+                            <li>Modern CSS Grid & Flexbox</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-tech-large">
+                        <span>HTML5</span>
+                        <span>CSS3</span>
+                        <span>JavaScript</span>
+                        <span>Responsive</span>
+                        <span>Animation</span>
+                        <span>UX/UI</span>
+                    </div>
+                    
+                    <div class="project-links">
+                        <a href="https://github.com/llmertonall/portfolio-website" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-github"></i>
+                            Kaynak Kodu
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-eye"></i>
+                            Canlı Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="#" class="whatsapp-float" id="whatsappFloat" title="WhatsApp'ta Mesaj Gönder">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+    // Contact Form - FormSubmit.co ile Çalışan Sistem
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contactForm');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(this);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const subject = formData.get('subject');
+                const message = formData.get('message');
+                
+                // Validation
+                if (!name || !email || !subject || !message) {
+                    alert('Lütfen tüm alanları doldurun.');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+                submitBtn.disabled = true;
+                
+                // Gerçek email gönderimi için GET yöntemi kullan (Form action)
+                const emailForm = document.createElement('form');
+                emailForm.action = 'https://formsubmit.co/oanalm312@gmail.com';
+                emailForm.method = 'POST';
+                emailForm.target = '_blank';
+                
+                // Form verilerini hidden input olarak ekle
+                const inputs = [
+                    {name: 'name', value: name},
+                    {name: 'email', value: email},
+                    {name: 'subject', value: 'Portföy Sitesi İletişim: ' + subject},
+                    {name: 'message', value: message},
+                    {name: '_next', value: 'https://github.com/llmertonall'},
+                    {name: '_captcha', value: 'false'},
+                    {name: '_template', value: 'table'}
+                ];
+                
+                inputs.forEach(input => {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = input.name;
+                    hiddenInput.value = input.value;
+                    emailForm.appendChild(hiddenInput);
+                });
+                
+                document.body.appendChild(emailForm);
+                emailForm.submit();
+                document.body.removeChild(emailForm);
+                
+                // Başarı mesajı göster
+                setTimeout(() => {
+                    alert('Mesaj gönderildi! FormSubmit sayfası açıldı. Lütfen doğrulama işlemini tamamlayın.');
+                    contactForm.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 500);
+            });
+        }
+    });
+    </script>
+    <script src="script.js?v=7&timestamp=1725398600"></script>
+</body>
+</html>
