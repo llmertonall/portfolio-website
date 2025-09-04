@@ -1073,63 +1073,110 @@ Bu mesaj portföy sitesi iletişim formundan gönderilmiştir.
         const aiSendMessage = document.getElementById('aiSendMessage');
         const aiChatBody = document.getElementById('aiChatBody');
 
-        // Enhanced AI responses database
+        // Professional Corporate AI responses database
         const aiResponses = {
-            greetings: ['merhaba', 'selam', 'hi', 'hello', 'hey', 'naber', 'nasılsın', 'günaydın', 'iyi günler'],
-            portfolio: ['proje', 'portfolio', 'çalışma', 'iş', 'projeler', 'ne yapmış', 'çalışması'],
-            skills: ['yetenek', 'beceri', 'teknoloji', 'dil', 'programming', 'kod', 'bildiği', 'öğrenmiş'],
-            contact: ['iletişim', 'telefon', 'email', 'mail', 'ulaş', 'nasıl ulaşabilirim', 'arama'],
-            experience: ['deneyim', 'tecrübe', 'çalış', 'staj', 'kariyer', 'nerede çalışmış'],
-            education: ['eğitim', 'okul', 'üniversite', 'mezun', 'nerede okuyor'],
-            hobbies: ['hobi', 'boş zaman', 'eğlence', 'spor', 'müzik', 'oyun', 'kitap'],
-            compliments: ['güzel', 'harika', 'süper', 'mükemmel', 'çok iyi', 'bravo', 'tebrik'],
-            questions: ['ne', 'nasıl', 'neden', 'kim', 'nerede', 'ne zaman', 'hangi'],
-            feelings: ['mutlu', 'üzgün', 'kızgın', 'heyecanlı', 'endişeli', 'nasıl hissediyor'],
-            weather: ['hava', 'yağmur', 'güneş', 'kar', 'sıcak', 'soğuk', 'hava durumu'],
-            time: ['saat', 'zaman', 'tarih', 'gün', 'saat kaç', 'bugün'],
-            food: ['yemek', 'aç', 'kahve', 'çay', 'pizza', 'döner', 'favori yemek'],
-            technology: ['yapay zeka', 'ai', 'robot', 'teknoloji', 'bilgisayar', 'internet'],
-            jokes: ['şaka', 'espri', 'komik', 'gül', 'eğlen', 'mizah'],
-            help: ['yardım', 'help', 'nasıl', 'anlamadım', 'açıkla'],
-            bye: ['görüşürüz', 'hoşça kal', 'bye', 'güle güle', 'sonra görüşürüz']
+            // Temel Karşılama
+            greetings: ['merhaba', 'selam', 'hi', 'hello', 'hey', 'iyi günler', 'hoş geldiniz'],
+            
+            // Proje Detayları
+            rfid_project: ['rfid', 'demirbaş', 'takip sistemi', 'üniversite projesi', 'rfid proje'],
+            web_projects: ['web sitesi', 'web geliştirme', 'frontend', 'backend', 'full stack'],
+            project_details: ['proje detay', 'nasıl yapıldı', 'hangi teknoloji', 'geliştirme süreci', 'mimari'],
+            
+            // Teknik Yetenekler
+            frontend_skills: ['frontend', 'html', 'css', 'javascript', 'react', 'ui', 'kullanıcı arayüzü'],
+            backend_skills: ['backend', 'php', 'node.js', 'mysql', 'veritabanı', 'server', 'api'],
+            tools_frameworks: ['framework', 'araçlar', 'git', 'github', 'geliştirme araçları'],
+            
+            // İş ve Kariyer
+            employment: ['işe alım', 'çalışma', 'işe başlama', 'maaş', 'pozisyon', 'kariyer'],
+            availability: ['müsait', 'başlayabilir', 'uygun', 'çalışabilir', 'ne zaman'],
+            remote_work: ['uzaktan', 'remote', 'evden çalışma', 'hibrit', 'ofis'],
+            junior_position: ['junior', 'entry level', 'yeni mezun', 'deneyim seviyesi'],
+            
+            // Eğitim ve Sertifikalar
+            education: ['eğitim', 'üniversite', 'bilgisayar mühendisliği', 'mezuniyet', 'ders'],
+            certifications: ['sertifika', 'kurs', 'eğitim', 'öğrendiği'],
+            
+            // Kişisel Gelişim
+            learning: ['öğrenme', 'gelişim', 'yeni teknoloji', 'kendini geliştirme'],
+            soft_skills: ['takım çalışması', 'iletişim', 'problem çözme', 'analitik düşünme'],
+            
+            // Proje Yönetimi
+            project_management: ['proje yönetimi', 'planlama', 'süreç', 'metodoloji', 'agile'],
+            testing: ['test', 'debug', 'hata ayıklama', 'kalite kontrol'],
+            
+            // İletişim ve Lokasyon
+            contact: ['iletişim', 'telefon', 'email', 'mail', 'ulaş'],
+            location: ['lokasyon', 'nerede', 'şehir', 'konum', 'adres'],
+            
+            // Güçlü Yönler ve Motivasyon
+            strengths: ['güçlü yön', 'avantaj', 'öne çıkan', 'başarı'],
+            motivation: ['motivasyon', 'hedef', 'amaç', 'vizyon', 'neden'],
+            
+            // Sektör ve Teknoloji Trendleri
+            industry_trends: ['trend', 'gelecek', 'teknoloji gelişimi', 'sektör'],
+            innovation: ['yenilik', 'inovasyon', 'yaratıcılık', 'çözüm']
         };
 
-        // Enhanced AI response messages
+        // Professional Corporate AI response messages
         const aiMessages = {
             greetings: [
-                "Merhaba! Ben Mert'in AI asistanıyım. Size nasıl yardımcı olabilirim? 😊",
-                "Selam! Bugün nasılsınız? Mert hakkında merak ettiğiniz bir şey var mı? 🤖",
-                "Hoş geldiniz! Ben burada Mert'i tanıtmak için varım. Sohbet edelim mi? ✨",
-                "Hey! İyi günler! Mert'in portfolio sitesine hoş geldiniz! 👋"
+                "Hoş geldiniz! Ben Mert Önal'ın AI asistanıyım. Mert'in profesyonel deneyimleri ve projeleri hakkında detaylı bilgi verebilirim. Size nasıl yardımcı olabilirim? 🤝",
+                "Merhaba! Mert'in teknik yetenekleri, projeleri ve kariyer hedefleri hakkında kapsamlı bilgi almak için buradayım. Hangi konuda bilgi istiyorsunuz? 💼"
+            ],
+            
+            rfid_project: [
+                "**RFID Demirbaş Takip Sistemi** - Mert'in ana projesi:\n\n📋 **Proje Kapsamı:** İnönü Üniversitesi için geliştirilen kurumsal demirbaş yönetim sistemi\n\n💻 **Kullanılan Teknolojiler:**\n• Backend: PHP, MySQL\n• Frontend: HTML5, CSS3, JavaScript\n• Donanım: RFID okuyucular ve etiketler\n• Database: İlişkisel veritabanı tasarımı\n\n🎯 **Özellikler:**\n• Gerçek zamanlı demirbaş takibi\n• Kullanıcı yetkilendirme sistemi\n• Detaylı raporlama modülü\n• Responsive web arayüzü\n• Veritabanı optimizasyonu\n\nBu proje Mert'in full-stack geliştirme yeteneklerini ve IoT entegrasyonu becerisini göstermektedir."
+            ],
+            
+            web_projects: [
+                "**Web Geliştirme Projeleri:**\n\n🌐 **Kişisel Portfolio Web Sitesi:**\n• Modern responsive tasarım\n• Dark/Light mode toggle\n• Smooth scroll animasyonları\n• Contact form entegrasyonu\n• GitHub Pages deployment\n• Performance optimization\n\n💡 **Teknik Özellikler:**\n• Vanilla JavaScript (framework bağımsız)\n• CSS Grid & Flexbox\n• Progressive Web App özellikleri\n• Cross-browser compatibility\n• Mobile-first approach\n• SEO optimization"
+            ],
+            
+            frontend_skills: [
+                "**Frontend Expertise:**\n\n🎨 **Core Technologies:**\n• HTML5: Semantic markup, accessibility\n• CSS3: Flexbox, Grid, animations, responsive design\n• JavaScript (ES6+): DOM manipulation, event handling, async programming\n\n🛠️ **Advanced Skills:**\n• CSS Preprocessors knowledge\n• Modern CSS features\n• Progressive enhancement\n• Cross-browser compatibility\n• Performance optimization\n\n📱 **Responsive Design:**\n• Mobile-first approach\n• Fluid layouts\n• Media queries\n• Touch-friendly interfaces"
+            ],
+            
+            backend_skills: [
+                "**Backend Development Expertise:**\n\n🔧 **PHP Development:**\n• Object-oriented programming\n• MVC architecture patterns\n• Database integration\n• RESTful API development\n• Session management\n• Security best practices\n\n🗄️ **Database Management:**\n• MySQL: Complex queries, joins, indexing\n• Database design & normalization\n• Performance optimization\n• Data migration\n\n⚡ **Node.js:**\n• Server-side JavaScript\n• npm package management\n• Event-driven programming"
             ],
             portfolio: [
-                "Mert'in harika projeleri var! RFID tabanlı demirbaş takip sistemi ve kişisel web sitesi gibi. Projeler bölümüne göz atmak ister misiniz? 💼",
-                "Portföyde İnönü Üniversitesi demirbaş takip sistemi ve modern web projeleri bulunuyor. Hangi proje ilginizi çekiyor? 🚀",
-                "Mert'in en gurur duyduğu proje RFID sistemi! Gerçekten etkileyici bir çalışma. 👨‍💻"
+                "**Mert'in Proje Portföyü:**\n\n🏆 **Ana Proje - RFID Demirbaş Takip Sistemi:**\n• İnönü Üniversitesi için geliştirildi\n• PHP backend, MySQL database\n• RFID hardware entegrasyonu\n• Kullanıcı yetkilendirme sistemi\n\n💻 **Web Development:**\n• Kişisel portfolio sitesi\n• Responsive design\n• Modern CSS/JavaScript\n• GitHub Pages deployment\n\n🎯 **Teknik Achievement:**\n• Full-stack development\n• Database design\n• IoT integration\n• Performance optimization"
             ],
             skills: [
-                "Mert'in teknik yetenekleri: HTML5, CSS3, JavaScript, PHP, Node.js, MySQL, Git ve RFID/IoT teknolojileri! 💻",
-                "Mert full-stack web geliştirme konusunda deneyimli. Özellikle PHP ve JavaScript alanlarında güçlü! ⚡",
-                "Kod yazmayı seven birisi Mert! Frontend'den backend'e kadar her şeyi hallediyor. 🔥"
+                "**Mert'in Teknik Yetenek Matrisi:**\n\n🔧 **Backend Development:**\n• PHP (OOP, MVC patterns)\n• MySQL (design, optimization)\n• RESTful API development\n• Database administration\n\n🎨 **Frontend Development:**\n• HTML5/CSS3 (responsive design)\n• JavaScript (ES6+, DOM manipulation)\n• UI/UX principles\n• Cross-browser compatibility\n\n⚡ **Additional Skills:**\n• Git version control\n• RFID/IoT technologies\n• Node.js basics\n• Performance optimization"
             ],
             contact: [
-                "Mert ile iletişime geçmek için: mertonal1100@gmail.com veya +90 505 037 61 60. WhatsApp butonu da aktif! 📞",
-                "İletişim bilgileri sayfada mevcut. Direkt email formu da kullanabilirsiniz! 📧",
-                "Mert'e ulaşmak çok kolay! Email veya telefon, hangisi size uygunsa. 😊"
+                "**Mert ile İletişim:**\n\n📧 **Email:** mertonal1100@gmail.com\n📱 **Telefon:** +90 505 037 61 60\n💬 **WhatsApp:** Sitedeki WhatsApp butonu aktif\n\n🌐 **Online Presence:**\n• GitHub: https://github.com/llmertonall\n• LinkedIn: Professional profile available\n• Portfolio: Bu site (llmertonall.github.io/portfolio-website)\n\n⏰ **Response Time:**\n• Email: 24 saat içinde\n• Telefon: İş saatleri arası\n• WhatsApp: Hızlı response\n\n📅 **Interview Availability:**\n• Flexible scheduling\n• Video call ready\n• In-person meetings (Malatya area)"
             ],
-            experience: [
-                "Mert şu anda İnönü Üniversitesi'nde Bilgisayar Mühendisliği okuyor ve çeşitli projeler geliştiriyor. Junior pozisyonlar arıyor! 🎓",
-                "Üniversite projelerinde RFID teknolojileri ve web geliştirme alanında deneyim kazanmış. 💪",
-                "Genç ama yetenekli! Öğrenim hayatında bile etkileyici projeler çıkarmış. 🌟"
+            
+            employment: [
+                "**İş Fırsatları için Mert'in Profili:**\n\n💼 **Pozisyon:** Junior Full-Stack Developer\n🎯 **Hedef:** Software development alanında kariyer başlangıcı\n⏰ **Müsaitlik:** Hemen başlayabilir\n\n✅ **İdeal Pozisyonlar:**\n• Junior Web Developer\n• Frontend Developer\n• Full-Stack Developer (Entry Level)\n• Software Developer Intern\n\n🏢 **Çalışma Tercihleri:**\n• Mentor desteği olan ortamlar\n• Öğrenme odaklı takımlar\n• Modern teknoloji stack'i\n• Growth opportunities"
             ],
+            
+            availability: [
+                "**Mert'in Müsaitlik Durumu:**\n\n📅 **Başlangıç:** Hemen başlayabilir\n⏰ **Çalışma Saatleri:** Flexible, full-time preferred\n📍 **Lokasyon:** Malatya merkezli, relocation open to discussion\n\n🎓 **Mevcut Durum:**\n• Üniversite son sınıf (Bilgisayar Mühendisliği)\n• Part-time veya full-time çalışmaya açık\n• Internship opportunities welcome\n\n💪 **Commitment Level:**\n• Uzun vadeli kariyer hedefleri\n• Professional growth odaklı\n• Takım çalışmasına uyumlu"
+            ],
+            
+            remote_work: [
+                "**Remote/Hibrit Çalışma Uyumu:**\n\n💻 **Remote Work Ready:**\n• Kendi development environment'ı mevcut\n• İnternet altyapısı stabil\n• Self-motivated ve organized\n\n🏠 **Home Office Setup:**\n• Professional workspace\n• Development tools & software\n• Communication tools proficiency\n\n🤝 **Collaboration Skills:**\n• Git/GitHub workflow experience\n• Online communication tools\n• Time zone flexibility\n• Async work capabilities"
+            ],
+            
+            soft_skills: [
+                "**Soft Skills ve Kişisel Yetkinlikler:**\n\n🤝 **Takım Çalışması:**\n• Collaborative approach\n• Knowledge sharing willingness\n• Conflict resolution\n• Peer support\n\n💬 **İletişim Becerileri:**\n• Technical communication\n• Documentation skills\n• Presentation abilities\n• Active listening\n\n🧩 **Problem Solving:**\n• Analytical thinking\n• Creative solutions\n• Systematic approach\n• Debug methodologies\n\n⏱️ **Time Management:**\n• Project deadline awareness\n• Priority setting\n• Multi-tasking abilities\n• Self-organization"
+            ],
+            
+            strengths: [
+                "**Mert'in Güçlü Yönleri:**\n\n💪 **Technical Strengths:**\n• Full-stack development capability\n• Problem-solving skills\n• Learning agility\n• Code quality awareness\n\n🎯 **Professional Strengths:**\n• Project completion focus\n• Detail-oriented approach\n• Time management\n• Documentation habits\n\n🚀 **Personal Strengths:**\n• Passion for technology\n• Continuous improvement mindset\n• Team collaboration\n• Adaptability\n\n🏆 **Competitive Advantages:**\n• Fresh university knowledge\n• Modern tech stack familiarity\n• Growth potential\n• Cost-effective hiring option"
+            ],
+            
             education: [
-                "Mert, İnönü Üniversitesi Bilgisayar Mühendisliği bölümünde eğitim görüyor (2022-devam ediyor). 🎓",
-                "Üniversite hayatında hem ders çalışıyor hem de projeler geliştiriyor. Süper değil mi? 📚"
+                "**Eğitim Geçmişi:**\n\n🎓 **İnönü Üniversitesi - Bilgisayar Mühendisliği**\n• Başlangıç: 2022\n• Durum: Aktif öğrenci (son sınıfa yakın)\n• Akademik Focus: Software engineering, algorithms, data structures\n\n📖 **Ders Programı Highlights:**\n• Object-Oriented Programming\n• Database Management Systems\n• Web Technologies\n• Software Engineering\n• Data Structures & Algorithms\n• Computer Networks\n\n🏆 **Akademik Projeler:**\n• RFID Demirbaş Takip Sistemi (capstone project)\n• Web development assignments\n• Database design projects"
             ],
-            hobbies: [
-                "Mert kod yazmayı seviyor, bu onun hem işi hem hobisi! Ayrıca teknoloji takip etmeyi de çok seviyor. 💻",
-                "Boş zamanlarında yeni teknolojiler öğreniyor ve yan projeler geliştiriyor. Gerçek bir teknoloji meraklısı! 🔧",
-                "Coding sevdalısı! GitHub'ında sürekli yeni projeler görürsünüz. 👨‍💻"
+            
+            experience: [
+                "**Mert'in Profesyonel Deneyim Profili:**\n\n🎓 **Akademik Projeler:**\n• RFID Demirbaş Takip Sistemi (2024)\n• Web development assignments\n• Database design projects\n• Software engineering coursework\n\n💻 **Teknik Deneyim:**\n• Full-stack web development\n• Database design ve implementation\n• RFID teknoloji entegrasyonu\n• Version control (Git/GitHub)\n\n🚀 **Kariyer Hedefleri:**\n• Junior Developer pozisyonu\n• Professional software development\n• Team collaboration experience\n• Industry best practices öğrenimi"
             ],
             compliments: [
                 "Çok teşekkürler! Mert de böyle komplimanlara bayılır! 😊",
