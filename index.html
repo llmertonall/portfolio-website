@@ -461,7 +461,7 @@
                 </div>
                 
                 <div class="contact-form reveal-right" style="animation-delay: 0.2s;">
-                    <form id="contactForm">
+                    <form id="contactForm" action="mailto:oanalm312@gmail.com" method="post" enctype="text/plain">
                         <div class="form-group">
                             <input type="text" id="name" name="name" placeholder="Adınız" required>
                         </div>
@@ -677,47 +677,27 @@
                     return;
                 }
                 
-                // Show loading state
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
-                submitBtn.disabled = true;
+                // Mailto ile email gönder
+                const emailBody = `
+İsim: ${name}
+Email: ${email}
+Konu: ${subject}
+
+Mesaj:
+${message}
+
+--
+Bu mesaj portföy sitesi iletişim formundan gönderilmiştir.
+                `.trim();
                 
-                // Gerçek email gönderimi için GET yöntemi kullan (Form action)
-                const emailForm = document.createElement('form');
-                emailForm.action = 'https://formsubmit.co/oanalm312@gmail.com';
-                emailForm.method = 'POST';
-                emailForm.target = '_blank';
+                const mailtoLink = `mailto:oanalm312@gmail.com?subject=${encodeURIComponent('Portföy İletişim: ' + subject)}&body=${encodeURIComponent(emailBody)}`;
                 
-                // Form verilerini hidden input olarak ekle
-                const inputs = [
-                    {name: 'name', value: name},
-                    {name: 'email', value: email},
-                    {name: 'subject', value: 'Portföy Sitesi İletişim: ' + subject},
-                    {name: 'message', value: message},
-                    {name: '_next', value: 'https://github.com/llmertonall'},
-                    {name: '_captcha', value: 'false'},
-                    {name: '_template', value: 'table'}
-                ];
-                
-                inputs.forEach(input => {
-                    const hiddenInput = document.createElement('input');
-                    hiddenInput.type = 'hidden';
-                    hiddenInput.name = input.name;
-                    hiddenInput.value = input.value;
-                    emailForm.appendChild(hiddenInput);
-                });
-                
-                document.body.appendChild(emailForm);
-                emailForm.submit();
-                document.body.removeChild(emailForm);
+                // Email istemcisini aç
+                window.location.href = mailtoLink;
                 
                 // Başarı mesajı göster
-                setTimeout(() => {
-                    alert('Mesaj gönderildi! FormSubmit sayfası açıldı. Lütfen doğrulama işlemini tamamlayın.');
-                    contactForm.reset();
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
+                alert('Email istemciniz açılacak. Mesajı oradan gönderebilirsiniz.');
+                contactForm.reset();
                 }, 500);
             });
         }
